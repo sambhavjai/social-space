@@ -8,7 +8,6 @@ User = get_user_model()
 from groups.models import Group
 import misaka
 
-# Create your models here.
 class Post(models.Model):
     user = models.ForeignKey(User,related_name='posts',on_delete=models.DO_NOTHING)
     create_date = models.DateTimeField(auto_now=True)
