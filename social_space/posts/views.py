@@ -7,6 +7,7 @@ from django.views.generic import DetailView,ListView,CreateView,DeleteView
 
 from . import forms
 from .models import Post
+from groups.models import Group
 
 from braces.views import SelectRelatedMixin
 
@@ -15,6 +16,12 @@ User = get_user_model()
 class PostList(ListView,SelectRelatedMixin):
     model = Post
     select_related = ('user','group')
+
+    def get_context_data(self,**kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user_groups'] = Group.objects.filter(members__in=[self.request.user])
+        context['all_groups'] = Group.objects.all()
+        return context
 
 class UserPosts(ListView):
     model = Post
