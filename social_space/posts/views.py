@@ -4,6 +4,7 @@ from django.urls import reverse_lazy
 from django.http import Http404
 from django.contrib.auth import get_user_model
 from django.views.generic import DetailView,ListView,CreateView,DeleteView
+from django.contrib import messages
 
 from . import forms
 from .models import Post
@@ -67,6 +68,6 @@ class DeletePost(DeleteView,LoginRequiredMixin,SelectRelatedMixin):
         queryset = super().get_queryset()
         return queryset.filter(user_id = self.request.user.id)
 
-    def delte(self,*args,**kwargs):
+    def delete(self,*args,**kwargs):
         messages.success(self.request,'Post Deleted')
         return super().delete(*args,**kwargs)
